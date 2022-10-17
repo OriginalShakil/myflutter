@@ -92,8 +92,7 @@ class _RegistrationState extends State<Registration> {
   }
 
   void loginPage() {
-    Navigator.of(context).pop(MaterialPageRoute(builder: (context) {
-       return const LoginView();
-    },));
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (route) => false);
   }
 }

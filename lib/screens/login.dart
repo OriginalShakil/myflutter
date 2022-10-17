@@ -35,49 +35,35 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Container(
-                padding: const EdgeInsets.all(30),
-                color: Colors.white,
-                width: double.infinity,
-                height: double.infinity,
-                child: Column(
-                  children: [
-                    const Text(
-                      'Login To Your Account',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                    TextField(
-                      controller: email,
-                      decoration: const InputDecoration(
-                          hintText: 'Enter Your Email Address'),
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    TextField(
-                      controller: pass,
-                      decoration: const InputDecoration(
-                          hintText: 'Enter Your Password'),
-                      obscureText: true,
-                    ),
-                    ElevatedButton(
-                        onPressed: login, child: const Text('Login')),
-                    ElevatedButton(
-                        onPressed: registerPage,
-                        child: const Text('Go To Register'))
-                  ],
-                ),
-              );
-            default:
-              return const Text('Loading....');
-          }
-        },
+      body: Container(
+        padding: const EdgeInsets.all(30),
+        color: Colors.white,
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          children: [
+            const Text(
+              'Login To Your Account',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            TextField(
+              controller: email,
+              decoration:
+                  const InputDecoration(hintText: 'Enter Your Email Address'),
+              enableSuggestions: false,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: pass,
+              decoration:
+                  const InputDecoration(hintText: 'Enter Your Password'),
+              obscureText: true,
+            ),
+            ElevatedButton(onPressed: login, child: const Text('Login')),
+            ElevatedButton(
+                onPressed: registerPage, child: const Text('Go To Register'))
+          ],
+        ),
       ),
     );
   }
@@ -108,10 +94,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void registerPage() {
-    Navigator.of(context).pop(MaterialPageRoute(
-      builder: (context) {
-        return const Registration();
-      },
-    ));
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/register', (route) => false);
   }
 }
