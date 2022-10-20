@@ -91,13 +91,13 @@ class _RegistrationState extends State<Registration> {
 
     print(res);
 
-
-Navigator.of(context)
-        .pushNamedAndRemoveUntil(noteRoute, (route) => false);
+    final user = FirebaseAuth.instance.currentUser;
+    await user?.sendEmailVerification();
+    
+    Navigator.of(context).pushNamed(verifyMailRoute);
   }
 
   void loginPage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
   }
 }

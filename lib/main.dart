@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myflutter/screens/notesview.dart';
+import 'package:myflutter/screens/verifyemail.dart';
 import 'package:myflutter/utills/constant.dart';
 import 'screens/homePage.dart';
 import 'screens/login.dart';
@@ -22,11 +23,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
       routes: {
         loginRoute:(context) => const LoginView(),
         regRoute:(context) => const Registration(),
         noteRoute:(context) => const NotesView(),
+        verifyMailRoute:(context) => const VerifyEmailView(),
       },
     );
   }

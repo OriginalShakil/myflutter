@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/utills/constant.dart';
-import '../firebase_options.dart';
-import 'registration.dart';
+import '../utills/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -78,52 +76,42 @@ class _LoginViewState extends State<LoginView> {
           .signInWithEmailAndPassword(email: userMail, password: userPass);
       print(res);
 
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(noteRoute, (route) => false);
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        if (user.emailVerified) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(noteRoute, (route) => false);
+        } else {
+          await user.sendEmailVerification();
+          Navigator.of(context).pushNamed(verifyMailRoute);
+        }
+      }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
-          showErrorDialog(context, 'User not Registered');
+          await showErrorDialog(context, 'User not Registered');
 
           break;
 
         case 'wrong-password':
-          showErrorDialog(context, 'incorrect password');
+          await showErrorDialog(context, 'incorrect password');
 
           break;
         case 'invalid-email':
-          showErrorDialog(context, 'Invalid Email');
+          await showErrorDialog(context, 'Invalid Email');
           break;
         default:
-          showErrorDialog(context, 'Error: ${e.code}');
+          await showErrorDialog(context, 'Error: ${e.code}');
       }
 
       print('Error msg ${e.code}');
     } catch (e) {
-      showErrorDialog(context, e.toString());
+      await showErrorDialog(context, e.toString());
     }
   }
 
   void registerPage() {
     Navigator.of(context).pushNamedAndRemoveUntil(regRoute, (route) => false);
   }
-}
-
-Future<void> showErrorDialog(BuildContext context, String msg) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Something Went Wrong'),
-        content: Text(msg),
-        actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Ok'))
-        ],
-      );
-    },
-  );
 }

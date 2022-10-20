@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
               } else {
                 print('You are non verified user');
 
-                return const VerifyEmailView();
+                // return const VerifyEmailView();
               }
             }
             return const LoginView();
