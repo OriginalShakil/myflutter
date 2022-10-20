@@ -76,6 +76,10 @@ class _LoginViewState extends State<LoginView> {
       final res = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: userMail, password: userPass);
       print(res);
+
+Navigator.of(context)
+        .pushNamedAndRemoveUntil('/notes', (route) => false);
+
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':

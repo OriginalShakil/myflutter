@@ -89,6 +89,10 @@ class _RegistrationState extends State<Registration> {
         .createUserWithEmailAndPassword(email: userMail, password: userPass);
 
     print(res);
+
+
+Navigator.of(context)
+        .pushNamedAndRemoveUntil('/notes', (route) => false);
   }
 
   void loginPage() {

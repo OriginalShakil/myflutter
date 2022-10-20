@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myflutter/screens/notesview.dart';
 import 'screens/homePage.dart';
 import 'screens/login.dart';
 import 'screens/registration.dart';
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/login':(context) => const LoginView(),
         '/register':(context) => const Registration(),
+        '/notes':(context) => const NotesView(),
       },
     );
   }
