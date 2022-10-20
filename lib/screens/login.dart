@@ -78,27 +78,52 @@ class _LoginViewState extends State<LoginView> {
           .signInWithEmailAndPassword(email: userMail, password: userPass);
       print(res);
 
-      Navigator.of(context).pushNamedAndRemoveUntil(noteRoute, (route) => false);
-
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(noteRoute, (route) => false);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
-          print('User not Registered');
+          showErrorDialog(context, 'User not Registered');
 
           break;
 
         case 'wrong-password':
-          print('incorrect password');
+          showErrorDialog(context, 'incorrect password');
 
           break;
+        case 'invalid-email':
+          showErrorDialog(context, 'Invalid Email');
+          break;
+        default:
+          showErrorDialog(context, 'Error: ${e.code}');
       }
 
       print('Error msg ${e.code}');
+    } catch (e) {
+      showErrorDialog(context, e.toString());
     }
   }
 
   void registerPage() {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(regRoute, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(regRoute, (route) => false);
   }
+}
+
+Future<void> showErrorDialog(BuildContext context, String msg) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Something Went Wrong'),
+        content: Text(msg),
+        actions: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'))
+        ],
+      );
+    },
+  );
 }
