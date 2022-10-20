@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myflutter/firebase_options.dart';
 import 'package:myflutter/screens/login.dart';
+import 'package:myflutter/utills/constant.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -92,11 +93,11 @@ class _RegistrationState extends State<Registration> {
 
 
 Navigator.of(context)
-        .pushNamedAndRemoveUntil('/notes', (route) => false);
+        .pushNamedAndRemoveUntil(noteRoute, (route) => false);
   }
 
   void loginPage() {
     Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', (route) => false);
+        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
   }
 }

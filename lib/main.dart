@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myflutter/screens/notesview.dart';
+import 'package:myflutter/utills/constant.dart';
 import 'screens/homePage.dart';
 import 'screens/login.dart';
 import 'screens/registration.dart';
@@ -23,9 +24,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       routes: {
-        '/login':(context) => const LoginView(),
-        '/register':(context) => const Registration(),
-        '/notes':(context) => const NotesView(),
+        loginRoute:(context) => const LoginView(),
+        regRoute:(context) => const Registration(),
+        noteRoute:(context) => const NotesView(),
       },
     );
   }

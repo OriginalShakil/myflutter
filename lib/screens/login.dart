@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:myflutter/utills/constant.dart';
 import '../firebase_options.dart';
 import 'registration.dart';
 
@@ -77,8 +78,7 @@ class _LoginViewState extends State<LoginView> {
           .signInWithEmailAndPassword(email: userMail, password: userPass);
       print(res);
 
-Navigator.of(context)
-        .pushNamedAndRemoveUntil('/notes', (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(noteRoute, (route) => false);
 
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -99,6 +99,6 @@ Navigator.of(context)
 
   void registerPage() {
     Navigator.of(context)
-        .pushNamedAndRemoveUntil('/register', (route) => false);
+        .pushNamedAndRemoveUntil(regRoute, (route) => false);
   }
 }
