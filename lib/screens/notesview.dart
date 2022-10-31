@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/screens/test.dart';
 import 'package:myflutter/utills/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -23,6 +24,17 @@ class _NotesViewState extends State<NotesView> {
     'post 6',
     'post 7',
   ];
+
+  // Obtain shared preferences.
+  late SharedPreferences prefs;
+  var value = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initPref();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,44 +69,59 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // Navigator.of(context).pop(
-              //   MaterialPageRoute(
-              //     builder: (context) {
-              //       return TestWed(txt: posts[index]);
-              //     },
-              //   ),
-              // );
-
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  testRoute,
-                  arguments: {'name': posts[index], 'else': 'nice'},
-                  (route) => false);
-
-
-                  
-            },
-            child: Container(
-              color: Colors.orange,
-              width: 400,
-              height: 200,
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Center(
-                child: Text(
-                  posts[index],
-                  style: const TextStyle(fontSize: 40),
-                ),
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(value),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    // Navigator.of(context).pop(
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return TestWed(txt: posts[index]);
+                    //     },
+                    //   ),
+                    // );
+          
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        testRoute,
+                        arguments: {'name': posts[index], 'else': 'nice'},
+                        (route) => false);
+                  },
+                  child: Container(
+                    color: Colors.orange,
+                    width: 400,
+                    height: 200,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: Text(
+                        posts[index],
+                        style: const TextStyle(fontSize: 40),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              itemCount: posts.length,
             ),
-          );
-        },
-        itemCount: posts.length,
+          ),
+        ],
       ),
     );
+  }
+
+  void initPref() async {
+    // Obtain shared preferences.
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      value = prefs.getString('counter')!;
+    });
+    log('pref: $value');
   }
 }
 

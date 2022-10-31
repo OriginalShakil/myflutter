@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myflutter/screens/notesview.dart';
+import 'package:myflutter/screens/restApiList.dart';
 import 'package:myflutter/screens/test.dart';
 import 'package:myflutter/screens/verifyemail.dart';
 import 'package:myflutter/utills/constant.dart';
@@ -25,12 +26,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
+      initialRoute: restApiRoute,
       routes: {
-        loginRoute:(context) => const LoginView(),
-        regRoute:(context) => const Registration(),
-        noteRoute:(context) => const NotesView(),
-        verifyMailRoute:(context) => const VerifyEmailView(),
-        testRoute:(context) => const TestWed(),
+        loginRoute: (context) => const LoginView(),
+        regRoute: (context) => const Registration(),
+        noteRoute: (context) => const NotesView(),
+        verifyMailRoute: (context) => const VerifyEmailView(),
+        testRoute: (context) => const TestWed(),
+        restApiRoute: (context) => const RestApiList(),
       },
     );
   }

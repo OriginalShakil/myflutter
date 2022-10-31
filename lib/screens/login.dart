@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myflutter/utills/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utills/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -57,6 +58,7 @@ class _LoginViewState extends State<LoginView> {
               decoration:
                   const InputDecoration(hintText: 'Enter Your Password'),
               obscureText: true,
+              
             ),
             ElevatedButton(onPressed: login, child: const Text('Login')),
             ElevatedButton(
@@ -68,6 +70,9 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void login() async {
+    // Obtain shared preferences.
+          final prefs = await SharedPreferences.getInstance();
+
     final userMail = email.text;
     final userPass = pass.text;
 
@@ -80,6 +85,9 @@ class _LoginViewState extends State<LoginView> {
 
       if (user != null) {
         if (user.emailVerified) {
+          
+// Save an integer value to 'counter' key.
+          await prefs.setString('counter', userMail);
           Navigator.of(context)
               .pushNamedAndRemoveUntil(noteRoute, (route) => false);
         } else {
